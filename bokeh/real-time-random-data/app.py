@@ -1,4 +1,4 @@
-# Streaming data (Generate fake data based on random values)
+# Practice: Streaming real time data (Generate fake data based on random values)
 
 import random
 from bokeh.driving import count
@@ -16,7 +16,6 @@ source = ColumnDataSource({'x':[], 'y':[]})
 def update(x):
     y = random.random()
     source.stream({'x':[x], 'y':[y]}, rollover=roll_over)
-    #source.stream({'x':[x], 'y':[y]})
     
 plot  = figure()
 plot.line('x', 'y', source = source)
