@@ -1,3 +1,5 @@
+# Example of plot
+
 from bokeh.models import ColumnDataSource
 from bokeh.plotting import figure, curdoc
 
