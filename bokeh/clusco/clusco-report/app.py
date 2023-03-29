@@ -10,13 +10,29 @@ from bokeh.models import ColumnDataSource
 from bokeh.models.tools import HoverTool
 from bokeh.plotting import curdoc, figure
 
+# Html doc reference
+doc = curdoc()
+
+# Configure database connection
 mongoURI = 'mongodb://localhost:27017/'
 mongoClient = pymongo.MongoClient(mongoURI)
 db = mongoClient["CACO"]
+
+# Get data from CLUSCO_hour collection
 clusco_hour_collection = db['CLUSCO_hour']
 
-clusco_hour_data = pandas.DataFrame(list(clusco_hour_collection.find()))
-print(clusco_hour_data)
+# SCB Temperature values
+SCB_temperature_query = { 'name' : 'scb_temperature' }
+clusco_SCB_temperature_data = pandas.DataFrame(list(clusco_hour_collection.find(SCB_temperature_query)))
+
+source = ColumnDataSource({'x':[clusco_SCB_temperature_data['avg']], 'y':[clusco_SCB_temperature_data['date']]})
+
+plot = figure()
+plot.line('x', 'y', source = source)
+plot.xaxis.axis_label = 'x'
+plot.yaxis.axis_label = 'y'
+
+doc.add_root(plot)
 
 
 
