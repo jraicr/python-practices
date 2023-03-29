@@ -1,0 +1,9 @@
+{
+    "SCBTEMP_UNIT": "°C",
+    "SCBHUM_UNIT": "%",
+    "AMPTEMP_UNIT": "°C",
+   
+    "HV_UNIT": "V",
+    "ANcur_UNIT": "µA"
+  }
+  
