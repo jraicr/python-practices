@@ -12,6 +12,7 @@ webdoc = curdoc()
 # Constants
 INITIAL_SIZE = 1000
 
+
 # Connect to the MongoDB database
 client = MongoClient()
 db = client['CACO']
