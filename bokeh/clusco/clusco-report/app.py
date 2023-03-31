@@ -10,7 +10,7 @@ from bokeh.models.formatters import DatetimeTickFormatter
 webdoc = curdoc()
 
 # Constants
-INITIAL_SIZE = 1000
+INITIAL_SIZE = 250
 
 # Connect to the MongoDB database
 client = MongoClient()
@@ -23,17 +23,19 @@ temps = []
 
 SCB_pixel_temperature_query = { 'name' : 'scb_pixel_temperature' }
 
-dataCollection = collection.find(SCB_pixel_temperature_query.limit(INITIAL_SIZE))
+dataCollection = collection.find(SCB_pixel_temperature_query).limit(INITIAL_SIZE)
+             
+            
+             
+# This isn't right, each document has the value for each pixel in a given date. So to plot
+# each pixel temperature average value and show each pixel temperature with a line we need to
+# iterate over the documents and then over the pixels in each document
 
-# df_dataCollection = pd.DataFrame(list(collection.find(SCB_pixel_temperature_query).limit(INITIAL_SIZE)))
-# df_dataCollection
-                 
 for document in dataCollection:
     for i in range(0, len(document['avg'])):
         dates.append(document['date'])
         temps.append(document['avg'][i])
 
-print(len(dates))
 
 # Create a ColumnDataSource object
 source = ColumnDataSource(data=dict(
@@ -41,9 +43,11 @@ source = ColumnDataSource(data=dict(
     temps=temps
 ))
 
+# Show example of date format value
 print(dates[0])
+
 # Create a figure object
-plot = figure(title="Average temperature per date", x_axis_label='Date', y_axis_label='Temperature')
+plot = figure(title="Average temperature per date", x_axis_label='Date', y_axis_label='PACTA Temperature')
 
 # Format the x-axis UTC time
 plot.xaxis.formatter = DatetimeTickFormatter(hours=['%H:%M'])

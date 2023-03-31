@@ -1,8 +1,3 @@
-Data to have into account based on PDF
-
-Todos los valores de los módulos:
-
-
 - PACTA temperature
     * property name: scb_pixel_temperature
     * size: time x 1855 pixels
